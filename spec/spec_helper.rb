@@ -1,0 +1,1 @@
+require_relative '../rock_paper_scissors_lesson2.rb'
