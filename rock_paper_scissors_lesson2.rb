@@ -13,7 +13,13 @@ class Player
   def increment_wins
     @number_of_wins += 1
   end
+
+  def self.weapon_choice
+    puts "Choose one: (r/p/s) ==> "
+    gets.chomp.downcase
+  end
 end
+
 
 class Weapon
   CHOICES = ['r', 'p', 's']
@@ -27,40 +33,58 @@ class Weapon
   end
 end
 
+
 class Game
-  def self.declare_winner(player1, player2, weapon1, weapon2)
+  attr_accessor :weapon1, :weapon2
+
+  def initialize    
+    @weapon1 = Player.weapon_choice
+    @weapon2 = Weapon.random_weapon
+  end
+
+  def declare_winner(player1, player2)
+    system "clear"
     puts "#{player1.name} picked #{weapon1} and #{player2.name} picked #{weapon2}."
     if weapon1 == weapon2
       puts "It's a tie."
     elsif weapon1 == 'r' && weapon2 == 'p'
-      puts "Paper wraps Rock, #{player2.name} won!"
+      puts "Paper wraps Rock. #{player2.name} won!"
       player2.increment_wins
     elsif weapon1 == 'p' && weapon2 == 's'
-      puts "Scissors cuts paper, #{player2.name} won!"
+      puts "Scissors cuts paper. #{player2.name} won!"
       player2.increment_wins
     elsif weapon1 == 's' && weapon2 == 'r'
-      puts "Rock crushes scissors, #{player2.name} won!"
+      puts "Rock crushes scissors. #{player2.name} won!"
       player2.increment_wins
     elsif weapon1 == 'r' && weapon2 == 's'
-      puts "Rock crushes scissors, #{player1.name} won!"
+      puts "Rock crushes scissors. #{player1.name} won!"
       player1.increment_wins
     elsif weapon1 == 'p' && weapon2 == 'r'
-      puts "Paper wraps Rock, #{player1.name} won!"
+      puts "Paper wraps Rock. #{player1.name} won!"
       player1.increment_wins
     elsif weapon1 == 's' && weapon2 == 'p'
-      puts "Scissors cuts paper, #{player1.name} won!"
+      puts "Scissors cuts paper. #{player1.name} won!"
       player1.increment_wins
     end
   end
 
-  def self.total_wins(player1, player2)
+  def play(player1, player2)
+    if Weapon.valid_weapon?(weapon1)
+      declare_winner(player1, player2)
+      total_wins(player1, player2)
+    else
+      puts "That wasn't a valid input."
+    end
+  end
+
+  def total_wins(player1, player2)
     puts
     puts "Total wins:"
     puts "#{player1.name}: #{player1.number_of_wins}"
     puts "#{player2.name}: #{player2.number_of_wins}"
   end
 
-  def self.keep_playing?
+  def keep_playing?
     puts
     puts "Keep playing? (y/n)"
     gets.chomp.downcase
@@ -68,7 +92,6 @@ class Game
 end
 
 def play_game
-  # get inputs for players and weapons (player and computer)
   system "clear"
   puts "Play Paper, Rock, Scissors"
   
@@ -77,21 +100,10 @@ def play_game
   player2 = Player.new("The Computer")
 
   begin
-    puts "Choose one: (p/r/s) ==> "
-    weapon1 = gets.chomp.downcase
-    weapon2 = Weapon.random_weapon
-    puts
-
-    if Weapon.valid_weapon?(weapon1)
-      Game.declare_winner(player1, player2, weapon1, weapon2)
-      Game.total_wins(player1, player2)
-    else
-      puts "That wasn't a valid input."
-    end
-
-    keep_playing = Game.keep_playing?
     system "clear"
-  end while keep_playing == 'y'  
+    game = Game.new
+    game.play(player1, player2)
+  end while game.keep_playing? == 'y'  
 end
 
 play_game
