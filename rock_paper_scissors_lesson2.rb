@@ -29,7 +29,7 @@ class Weapon
   end
 
   def self.random_weapon
-    ['r', 'p', 's'].shuffle.pop
+    CHOICES.sample
   end
 end
 
@@ -89,6 +89,7 @@ class Game
     gets.chomp.downcase
   end
 end
+
 
 def play_game
   system "clear"
