@@ -13,11 +13,6 @@ class Player
   def increment_wins
     @number_of_wins += 1
   end
-
-  def self.weapon_choice
-    puts "Choose one: (r/p/s) ==> "
-    gets.chomp.downcase
-  end
 end
 
 
@@ -31,6 +26,11 @@ class Weapon
   def self.random_weapon
     CHOICES.sample
   end
+
+  def self.weapon_choice
+    puts "Choose one: (r/p/s) ==> "
+    gets.chomp.downcase
+  end
 end
 
 
@@ -38,7 +38,7 @@ class Game
   attr_accessor :weapon1, :weapon2
 
   def initialize    
-    @weapon1 = Player.weapon_choice
+    @weapon1 = Weapon.weapon_choice
     @weapon2 = Weapon.random_weapon
   end
 
