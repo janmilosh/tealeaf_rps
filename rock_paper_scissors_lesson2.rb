@@ -10,8 +10,8 @@ class Player
     @number_of_wins += 1
   end
 
-  def weapon
-    @weapon
+  def choose_weapon
+    @weapon = name == 'The Computer' ? Weapon.random : Weapon.choice
   end
 end
 
@@ -36,18 +36,15 @@ end
 
 class Game
   def play(player1, player2)
-    choose_weapon(player1, player2)
+    player1.choose_weapon
+    player2.choose_weapon
+    
     if Weapon.valid?(player1.weapon)
       declare_winner(player1, player2)
       total_wins(player1, player2)
     else
       puts "That wasn't a valid input."
     end
-  end
-
-  def choose_weapon(player1, player2)
-    player1.weapon = Weapon.choice
-    player2.weapon = Weapon.random
   end
 
   def declare_winner(player1, player2)
