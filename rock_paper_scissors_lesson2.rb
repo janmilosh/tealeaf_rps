@@ -1,5 +1,5 @@
 class Player
-  attr_accessor :name, :number_of_wins
+  attr_accessor :name, :number_of_wins, :weapon
 
   def initialize(name)
     @name = name == '' ? 'You' : name
@@ -8,6 +8,10 @@ class Player
 
   def increment_wins
     @number_of_wins += 1
+  end
+
+  def weapon
+    @weapon
   end
 end
 
@@ -31,45 +35,44 @@ end
 
 
 class Game
-  attr_accessor :weapon1, :weapon2
-
-  def initialize    
-    @weapon1 = Weapon.choice
-    @weapon2 = Weapon.random
-  end
-
-  def declare_winner(player1, player2)
-    system "clear"
-    puts "#{player1.name} picked #{weapon1} and #{player2.name} picked #{weapon2}.\n\n"
-    if weapon1 == weapon2
-      puts "It's a tie."
-    elsif weapon1 == 'r' && weapon2 == 'p'
-      puts "Paper wraps Rock. #{player2.name} won!"
-      player2.increment_wins
-    elsif weapon1 == 'p' && weapon2 == 's'
-      puts "Scissors cuts paper. #{player2.name} won!"
-      player2.increment_wins
-    elsif weapon1 == 's' && weapon2 == 'r'
-      puts "Rock crushes scissors. #{player2.name} won!"
-      player2.increment_wins
-    elsif weapon1 == 'r' && weapon2 == 's'
-      puts "Rock crushes scissors. #{player1.name} won!"
-      player1.increment_wins
-    elsif weapon1 == 'p' && weapon2 == 'r'
-      puts "Paper wraps Rock. #{player1.name} won!"
-      player1.increment_wins
-    elsif weapon1 == 's' && weapon2 == 'p'
-      puts "Scissors cuts paper. #{player1.name} won!"
-      player1.increment_wins
-    end
-  end
-
   def play(player1, player2)
-    if Weapon.valid?(weapon1)
+    choose_weapon(player1, player2)
+    if Weapon.valid?(player1.weapon)
       declare_winner(player1, player2)
       total_wins(player1, player2)
     else
       puts "That wasn't a valid input."
+    end
+  end
+
+  def choose_weapon(player1, player2)
+    player1.weapon = Weapon.choice
+    player2.weapon = Weapon.random
+  end
+
+  def declare_winner(player1, player2)
+    system "clear"
+    puts "#{player1.name} picked #{player1.weapon} and #{player2.name} picked #{player2.weapon}.\n\n"
+    if player1.weapon == player2.weapon
+      puts "It's a tie."
+    elsif player1.weapon == 'r' && player2.weapon == 'p'
+      puts "Paper wraps Rock. #{player2.name} won!"
+      player2.increment_wins
+    elsif player1.weapon == 'p' && player2.weapon == 's'
+      puts "Scissors cuts paper. #{player2.name} won!"
+      player2.increment_wins
+    elsif player1.weapon == 's' && player2.weapon == 'r'
+      puts "Rock crushes scissors. #{player2.name} won!"
+      player2.increment_wins
+    elsif player1.weapon == 'r' && player2.weapon == 's'
+      puts "Rock crushes scissors. #{player1.name} won!"
+      player1.increment_wins
+    elsif player1.weapon == 'p' && player2.weapon == 'r'
+      puts "Paper wraps Rock. #{player1.name} won!"
+      player1.increment_wins
+    elsif player1.weapon == 's' && player2.weapon == 'p'
+      puts "Scissors cuts paper. #{player1.name} won!"
+      player1.increment_wins
     end
   end
 
