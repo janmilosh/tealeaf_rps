@@ -28,7 +28,7 @@ class Weapon
   end
 
   def self.choice
-    puts "Choose one: (r/p/s) ==> "
+    print "Choose one: (r/p/s) ==> "
     gets.chomp.downcase
   end
 end
@@ -84,7 +84,7 @@ class Game
   end
 
   def keep_playing?
-    puts "Keep playing? (y/n)"
+    print "Keep playing? (y/n) ==> "
     gets.chomp.downcase
   end
 end
@@ -95,7 +95,7 @@ def play_game
   puts "Play Paper, Rock, Scissors"
   puts "~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n"
 
-  puts "Please enter your name ==> "
+  print "Please enter your name ==> "
   player1 = Player.new(gets.chomp)
   player2 = Player.new("The Computer")
 
