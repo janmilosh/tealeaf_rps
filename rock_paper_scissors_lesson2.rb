@@ -2,11 +2,7 @@ class Player
   attr_accessor :name, :number_of_wins
 
   def initialize(name)
-    if name == ''
-      @name = 'You'
-    else
-      @name = name
-    end
+    @name = name == '' ? 'You' : name
     @number_of_wins = 0
   end
 
@@ -23,11 +19,11 @@ class Weapon
     CHOICES.include?(weapon)
   end
 
-  def self.random_weapon
+  def self.random
     CHOICES.sample
   end
 
-  def self.weapon_choice
+  def self.choice
     puts "Choose one: (r/p/s) ==> "
     gets.chomp.downcase
   end
@@ -38,8 +34,8 @@ class Game
   attr_accessor :weapon1, :weapon2
 
   def initialize    
-    @weapon1 = Weapon.weapon_choice
-    @weapon2 = Weapon.random_weapon
+    @weapon1 = Weapon.choice
+    @weapon2 = Weapon.random
   end
 
   def declare_winner(player1, player2)
