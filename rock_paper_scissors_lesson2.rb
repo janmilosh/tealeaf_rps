@@ -15,7 +15,7 @@ end
 class Weapon
   CHOICES = ['r', 'p', 's']
   
-  def self.valid_weapon?(weapon)
+  def self.valid?(weapon)
     CHOICES.include?(weapon)
   end
 
@@ -65,7 +65,7 @@ class Game
   end
 
   def play(player1, player2)
-    if Weapon.valid_weapon?(weapon1)
+    if Weapon.valid?(weapon1)
       declare_winner(player1, player2)
       total_wins(player1, player2)
     else
